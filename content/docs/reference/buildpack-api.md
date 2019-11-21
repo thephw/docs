@@ -144,7 +144,7 @@ The schema is as follows:
 - **`api`** _(string, required, current: `0.2`)_\
     The Buildpack API version the buildpack adheres to. Used to ensure [compatibility](#api-compatibility) against
     the [lifecycle][lifecycle].
-    
+
     > Not to be confused with Cloud Foundry or Heroku buildpack versions. This version pertains to the interface
     > between the [buildpack][buildpack] and the [lifecycle][lifecycle] of Cloud Native Buildpacks.
 
@@ -153,37 +153,41 @@ The schema is as follows:
 
     - **`id`** _(string, required)_\
     A globally unique identifier.
-    
+
     - **`version`** _(string, required)_\
     The version of the buildpack.
     
+    - **`name`** _(string, required)_\
+    Human readable name.
+
     - **`clear-env`** _(boolean, optional, default: `false`)_\
     Clears user-defined environment variables when `true` on executions of `bin/detect` and `bin/build`.
 
 - **`stacks`** _(list, optional)_\
     A list of stacks supported by the buildpack.
     _If omitted, `order` list must be present. Cannot be used in conjunction with `order` list._
-    
+
     - **`id`** _(string, required)_\
     The id of the supported stack.
-    
+
     - **`mixins`** _(string list, required)_\
     A list of mixins required on the stack images.
-    
+
 - **`order`** _(list, optional)_\
-  A list of buildpack groups. This list determines the order in which groups of buildpacks
-  will be tested during detection. For the purpose of creating a [meta-buildpack][meta-buildpack]. _If omitted, `stacks` list must be present. Cannot be used in conjunction with `stacks` list._
+  A list of buildpack groups for the purpose of creating a [meta-buildpack][meta-buildpack]. This list determines the
+  order in which groups of buildpacks will be tested during detection. _If omitted, `stacks` list must be present.
+  Cannot be used in conjunction with `stacks` list._
   
     - **`group`** _(list, required)_\
-    A set of buildpack references.
-    
+    A list of buildpack references.
+
         - **`id`** _(string, required)_\
-          The identifier of a buildpack from the configuration's top-level `buildpacks` list. Buildpacks with the same ID may
-          appear in multiple groups at once but never in the same group.
-        
+          The identifier of a buildpack being referred to.
+          Buildpacks with the same ID may appear in multiple groups at once but never in the same group.
+
         - **`version`** _(string, required)_\
           The version of the buildpack being referred to.
-        
+    
         - **`optional`** _(boolean, optional, default: `false`)_\
           Whether or not this buildpack is optional during detection.
  
